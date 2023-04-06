@@ -1,0 +1,35 @@
+# docker-compose.yml
+
+version: '3.8'
+services:
+  api:
+    build: .
+    container_name: food_api
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn app.main:app --host 0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    environment:
+      - GENERAL_DATABASE_URL=postgresql://fastapi:fastapi@db:5432/fastapi
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    container_name: food_postgresql
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=fastapi
+      - POSTGRES_PASSWORD=fastapi
+      - POSTGRES_DB=fastapi
+  front:
+    build: app/Front/
+    ports:
+      - "4173:4173"
+    depends_on:
+      - api
+volumes:
+  postgres_data:
