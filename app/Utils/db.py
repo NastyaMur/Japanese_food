@@ -24,6 +24,19 @@ class User(ormar.Model):
     created:         str = ormar.Text(max_length=255, nullable=True)
     roles:           str = ormar.Text(max_length=255, nullable=True)
 
+class Auth(ormar.Model):
+    class Meta(generalPosrgres):
+        tablename = "auth"
+    user:            str = ormar.Text(max_length=255, nullable=False)
+    created:         str = ormar.Text(max_length=255, nullable=False)
+    token:           str = ormar.Text(max_length=255, primary_key=True)
+
+class Role(ormar.Model):
+    class Meta(generalPosrgres):
+        tablename = "role"
+    name:         str = ormar.Text(max_length=255, nullable=False)
+    code:         str = ormar.Text(max_length=255, primary_key=True)
+
 class Food(ormar.Model):
     class Meta(generalPosrgres):
         tablename = "food"
@@ -37,6 +50,7 @@ class Order(ormar.Model):
     class Meta(generalPosrgres):
         tablename = "order"
     created:         str = ormar.Text(max_length=255, nullable=True)
+    author:          str = ormar.Text(max_length=255, nullable=True)
     sum:             int = ormar.Integer(minimal=0, nullable=True)
     number:          int = ormar.Integer(minimal=0, primary_key=True)
     description:     str = ormar.Text(max_length=255, nullable=True)

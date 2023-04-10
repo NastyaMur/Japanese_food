@@ -39,6 +39,12 @@ const router = createRouter({
       component: () => import('../views/client/category.vue')
     },
 
+    {
+      path: '/login',
+      name: 'Авторизация',
+      component: () => import('../views/client/login.vue')
+    },
+
 
     {
       path: '/admin',

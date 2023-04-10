@@ -1,11 +1,11 @@
-# API | Позиции меню
+# API | Позиция меню
 
 ## Оглавление
-* [Получить весь перечень позиций в меню](#getAll)
-* [Получить одну позицию в меню по номеру](#getOnce)
-* [Создании новой позиции](#create)
-* [Редактирование позиции](#edit)
-* [Удалить позицию в меню](#delete)
+* [Получить весь перечень позиций в меню](#getAll) <img src="https://img.shields.io/badge/-All-green">
+* [Получить одну позицию в меню по номеру](#getOnce) <img src="https://img.shields.io/badge/-All-green">
+* [Создании новой позиции](#create) <img src="https://img.shields.io/badge/-Auth-red">
+* [Редактирование позиции](#edit) <img src="https://img.shields.io/badge/-Auth-red">
+* [Удалить позицию в меню](#delete) <img src="https://img.shields.io/badge/-Auth-red">
 
 <a name="getAll"></a>
 #### Получить весь перечень позиций в меню

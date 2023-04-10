@@ -26,9 +26,12 @@ services:
       - POSTGRES_PASSWORD=fastapi
       - POSTGRES_DB=fastapi
   front:
-    build: app/Front/
+    build: ./app/Front
+    volumes:
+      - './app/Front:/app'
+      - '/app/node_modules'
     ports:
-      - "4173:4173"
+      - "8080:8080"
     depends_on:
       - api
 volumes:

@@ -1,8 +1,18 @@
 # 🍱 Japanese_Food
 
 ## Оглавление
+
+В данном репозитории используются badge для классификации уровня доступа запросов 
+
+<img src="https://img.shields.io/badge/-Auth-red"> - Запросы помеченные такой иконкой доступны лишь после авторизации
+
+<img src="https://img.shields.io/badge/-All-green"> - Запросы с такой иконкой доступны для всех
+
 * API
-    * [Позиции меню](/docs/food.md)
+    * [Позиция меню](/docs/food.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+    * [Роли](/docs/role.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+    * [Заказ](/docs/order.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+    * [Пользователь](/docs/user.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
 * [Запуск приложения](#starting)
 
 
