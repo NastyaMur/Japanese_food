@@ -1,7 +1,3 @@
-<script setup>
-  import { useCookies } from "vue3-cookies";
-</script>
-
 <template>
   <div class="container">
     <div class="login_header">
@@ -62,6 +58,8 @@
 
 <script>
     import baseURL from "@/config"
+    import { useCookies } from "vue3-cookies";
+    import md5 from "js-md5"
 
     export default {
         data() {
@@ -78,42 +76,40 @@
         mounted() {
         },
         methods: {
-            hideToast() {
-              const toast = document.getElementById('errorAuthToast')
-              toast.classList.remove('d-block')
-            },
-            async login(mail, pass) {
-              const response = await fetch(`${baseURL}/api/login`, {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  'email': mail,
-                  "hash_pass" : pass
-                  // "hash_pass" : md5(pass)
-                })
-              });
-              const jsonData = await response.json();
-              return jsonData
-            },
-            async sumbit() {
+          hideToast() {
+            const toast = document.getElementById('errorAuthToast')
+            toast.classList.remove('d-block')
+          },
+          async login(mail, pass) {
+            const response = await fetch(`${baseURL}/api/user/login`, {
+              method: "POST",
+              mode: "cors",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                'email': mail,
+                "hash_pass" : md5(pass)
+              })
+            });
+            const jsonData = await response.json();
+            return jsonData
+          },
+          async sumbit() {
+            let login = document.getElementById('login').value
+            let pass = document.getElementById('pass').value
 
-                login = document.getElementById('login').value
-                pass = document.getElementById('pass').value
-
-                this.login(login, pass).then((data) => {
-                  if (data.detail.type == 'error') {
-                    const toast = document.getElementById('errorAuthToast')
-                    toast.classList.add('d-block')
-                  }
-                  if (data.detail.type == 'success') {
-                    this.cookies.set("token", data.detail.data.token)
-                  }
-                });
-                
-            }
+            this.login(login, pass).then((data) => {
+              if (data.detail.type == 'error') {
+                const toast = document.getElementById('errorAuthToast')
+                toast.classList.add('d-block')
+              }
+              if (data.detail.type == 'success') {
+                this.cookies.set("token", data.detail.data.token)
+                window.location.href = "/admin"
+              }
+            });
+          }
         }
     }
 </script>

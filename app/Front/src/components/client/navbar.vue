@@ -24,20 +24,32 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 p-3 text-center">
-                            <li class="nav-item">
-                                <router-link class="nav-link" to="/category/bonus">Акции</router-link>
+                            <li class="nav-item" v-for="item in items">
+                                <router-link class="nav-link" :to="'/category/' + item.code">{{item.name}}</router-link>
                             </li>
-                            <li class="nav-item">
-                                <router-link class="nav-link" to="/category/cold">Холодные роллы</router-link>
+                            <!-- <li class="nav-item ms-2" >
+                                <router-link class="nav-link" to="/user">
+                                    <div class="d-flex" id="user">
+                                        <div class="img me-2">
+                                            <img v-if="this.user.photo" :src="this.user.photo">
+                                            <img v-if="!this.user.photo" src="@/assets/image/user.jpg">
+                                        </div>
+                                        <p class="fw-bold"><span class="text-muted">Привет,</span> {{ this.user.name }} 👋</p>
+                                    </div>
+                                </router-link>
+                            </li> -->
+                            <li class="nav-item ms-1" v-if="isAdmin">
+                                <a class="nav-link" href="/admin">
+                                    <font-awesome-icon :icon="['fas', 'cog']" class="me-2 text-primary" />
+                                </a>
                             </li>
-                            <li class="nav-item">
-                                <router-link class="nav-link" to="/category/premium">Премиум роллы</router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link class="nav-link" to="/category/hot">Запеченные роллы</router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link class="nav-link" to="/category/sets">Сеты</router-link>
+                            
+                            <li class="nav-item ms-1" >
+                                <router-link class="nav-link" style="color: rgb(214, 0, 212)" to="/cart">
+                                    <font-awesome-icon :icon="['fas', 'cart-shopping']" style="color: rgb(214, 0, 212); margin-right: 10px;" />
+                                    Корзина
+                                    <!-- <span class="badge bg-success">0</span> -->
+                                </router-link>
                             </li>
                         </ul>
                     </div>
@@ -48,9 +60,49 @@
 </template>
 
 <script>
-  export default {
-    name: 'navbar'
-  }
+    import baseURL from "@/config"
+    import { useCookies } from "vue3-cookies";
+
+    export default {
+        data() {
+            return { 
+                items: [],
+                isAdmin: false
+            }
+        },
+        created() { 
+            this.getData().then((data) => {
+                this.items = data
+            })
+            this.getMe().then((data) => {
+                if (data.roles && data.roles.includes('admin')) {
+                    this.isAdmin = true
+                }
+            })
+        },
+        methods: {
+          async getData() {
+            const response = await fetch(`${baseURL}/api/category`, {
+              method: "GET",
+              mode: "cors"
+            });
+            const jsonData = await response.json();
+            return jsonData
+          },
+          async getMe() {
+            const { cookies } = useCookies();
+            const response = await fetch(`${baseURL}/api/user/me`, {
+              method: "GET",
+              mode: "cors",
+              headers: {
+                "Authorization": `Bearer ${cookies.get("token")}`
+              },
+            });
+            const jsonData = await response.json();
+            return jsonData
+          }
+        }
+    }
 </script>
 
 <style scoped>
@@ -97,5 +149,32 @@ a.navbar-brand {
 .offcanvas-body > ul > li > a{
     border-radius: 7px;
 }
-
+#user {
+    text-decoration: none !important;
+    color: black;
+    transition: .3s;
+}
+#user > .img {
+    position: relative;
+    overflow:hidden;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+}
+#user > .img > img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    object-fit:cover;
+}
+#user > div {
+    padding-top: 5px;
+}
+#user > div > p {
+    margin-bottom: -10px;
+}
 </style>

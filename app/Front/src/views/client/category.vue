@@ -9,12 +9,15 @@
 
     <div class="view">
       <div class="container p-4">
-        <h3 class="fw-bolder">{{this.categoryCode}}</h3>
+        <h3 class="fw-bolder">{{this.categoryName}}</h3>
         <div class="row">
-            <menuTopItem/>
-            <menuTopItem/>
-            <menuTopItem/>
-            <menuTopItem/>
+            <menuTopItem v-for="food in items"
+              :number = food.number
+              :name = food.name
+              :price = food.price
+              :photo = food.photo
+              :description = food.description
+            />
         </div>
       </div>
 
@@ -31,28 +34,61 @@
 </style>
 
 <script>
-
+    import baseURL from "@/config"
     export default {
         data() {
             return { 
-                data: {},
-                category: null
+                items: [],
+                categoryCode: null,
+                categoryCodeOld: null,
+                categoryName: null
             }
         },
-        created() {
-            let path = this.$route.path
-            this.categoryCode = path.substring(path.lastIndexOf('/') + 1, path.length)
+        created() { 
+          this.init()
         },
-        // mounted() {
-        // },
-        // methods: {
-        //     async getData(age) {
-        //         const response = await fetch(`${baseURL}/photoAlbum/${age}`)
-        //         const data = await response.json()
+        updated() { 
+          this.getCategoryCode().then((code) => {
+            if (code != this.categoryCodeOld) {
+              this.categoryCodeOld = code
+              this.init()
+            }
+          })
+        },
+        methods: {
+          async init() {
+            this.getCategoryCode().then((code) => {
+              this.categoryCode = code
 
-        //         console.log(data)
-        //         this.data = data
-        //     }
-        // }
+              this.getCategory(code).then((data) => {
+                this.categoryName = data.name
+              })
+
+              this.getFoods(code).then((foods) => {
+                this.items = foods
+              })
+            })
+          },
+          async getCategoryCode() {
+            let path = this.$route.path
+            return path.substring(path.lastIndexOf('/') + 1, path.length)
+          },
+          async getCategory(code) {
+            const response = await fetch(`${baseURL}/api/category/${code}`, {
+              method: "GET",
+              mode: "cors"
+            });
+            const jsonData = await response.json();
+            return jsonData
+          },
+          async getFoods(categoryCode) {
+            const response = await fetch(`${baseURL}/api/category/${categoryCode}/positions`, {
+              method: "GET",
+              mode: "cors"
+            });
+            const jsonData = await response.json();
+            return jsonData
+          }
+        }
     }
 </script>

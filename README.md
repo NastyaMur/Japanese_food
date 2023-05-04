@@ -9,10 +9,13 @@
 <img src="https://img.shields.io/badge/-All-green"> - Запросы с такой иконкой доступны для всех
 
 * API
-    * [Позиция меню](/docs/food.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
-    * [Роли](/docs/role.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
-    * [Заказ](/docs/order.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
-    * [Пользователь](/docs/user.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+    * [Категории меню](/docs/api/category.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+    * [Позиция меню](/docs/api/food.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+    * [Роли](/docs/api/role.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+    * [Заказ](/docs/api/order.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+    * [Пользователь](/docs/api/user.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+        * [Сессии авторизации](/docs/api/session.md) <img src="https://img.shields.io/badge/-Auth-red"> <img src="https://img.shields.io/badge/-All-green">
+* [Жизненный цикл заказа](/docs/orderFlow.md)
 * [Запуск приложения](#starting)
 
 

@@ -2,6 +2,7 @@ import os
 import databases
 import ormar
 import sqlalchemy
+import json
 from sqlalchemy import DateTime
 from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import sessionmaker
@@ -18,8 +19,10 @@ class generalPosrgres(ormar.ModelMeta):
 class User(ormar.Model):
     class Meta(generalPosrgres):
         tablename = "user"
+    number:          int = ormar.Integer(minimal=0, primary_key=True)
+    photo:           str = ormar.Text(nullable=True)
     name:            str = ormar.Text(max_length=255, nullable=True)
-    email:           str = ormar.Text(max_length=255, primary_key=True)
+    email:           str = ormar.Text(max_length=255, nullable=False)
     password:        str = ormar.Text(max_length=255, nullable=True)
     created:         str = ormar.Text(max_length=255, nullable=True)
     roles:           str = ormar.Text(max_length=255, nullable=True)
@@ -30,21 +33,34 @@ class Auth(ormar.Model):
     user:            str = ormar.Text(max_length=255, nullable=False)
     created:         str = ormar.Text(max_length=255, nullable=False)
     token:           str = ormar.Text(max_length=255, primary_key=True)
+    active:          bool = ormar.Boolean()
+    
 
 class Role(ormar.Model):
     class Meta(generalPosrgres):
         tablename = "role"
     name:         str = ormar.Text(max_length=255, nullable=False)
     code:         str = ormar.Text(max_length=255, primary_key=True)
+    lock:         bool = ormar.Boolean()
 
 class Food(ormar.Model):
     class Meta(generalPosrgres):
         tablename = "food"
     number:          int = ormar.Integer(minimal=0, primary_key=True)
     name:            str = ormar.Text(max_length=255, nullable=True)
+    photo:           str = ormar.Text(nullable=True)
+    category:        str = ormar.Text(max_length=255, nullable=True)
     price:           int = ormar.Integer(minimal=0, nullable=True)
+    weight:          int = ormar.Integer(minimal=0, nullable=True)
     description:     str = ormar.Text(max_length=255, nullable=True)
     active:          bool = ormar.Boolean()
+    popular:         bool = ormar.Boolean()
+
+class Category(ormar.Model):
+    class Meta(generalPosrgres):
+        tablename = "category"
+    name:            str = ormar.Text(max_length=255, nullable=False)
+    code:         str = ormar.Text(max_length=255, primary_key=True)
 
 class Order(ormar.Model):
     class Meta(generalPosrgres):

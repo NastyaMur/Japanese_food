@@ -2,8 +2,8 @@
 </script>
 
 <template>
-    <div class="item-bloc col-6 col-md-4 col-lg-3">
-        <div class="item">
+    <div class="item-bloc col-6 col-md-6 col-lg-4 col-xl-3">
+        <div class="item shadow">
             <div class="image">
                 <img src="@/assets/image/roll1.png" class="w-100">
             </div>
